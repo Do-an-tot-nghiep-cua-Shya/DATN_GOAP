@@ -1,6 +1,5 @@
 using System.Collections;
 using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -9,9 +8,8 @@ public abstract class GAction : MonoBehaviour
     public string actionName = "Action";
     public float cost = 1.0f;
     public GameObject target;
-    public GameObject targetTag;
+    public string targetTag;
     public float duration = 0;
-
     public WorldState[] preConditions;
     public WorldState[] afterEffects;
     public NavMeshAgent agent;
@@ -19,7 +17,7 @@ public abstract class GAction : MonoBehaviour
     public Dictionary<string, int> preconditions;
     public Dictionary<string, int> effects;
 
-    public WorldStates agentBelifes;
+    public WorldStates agentBeliefs;
 
     public bool running = false;
 
@@ -33,35 +31,31 @@ public abstract class GAction : MonoBehaviour
     {
         agent = this.gameObject.GetComponent<NavMeshAgent>();
 
-        if (preConditions != null )
-        {
-            foreach(WorldState w in preConditions)
+        if (preConditions != null)
+            foreach (WorldState w in preConditions)
             {
                 preconditions.Add(w.key, w.value);
             }
-        }
+
         if (afterEffects != null)
-        {
             foreach (WorldState w in afterEffects)
             {
                 effects.Add(w.key, w.value);
             }
-        }
+
     }
 
-    public bool IsAchivable()
+    public bool IsAchievable()
     {
         return true;
     }
 
-    public bool IsAchivableGiven(Dictionary<string, int> conditions)
+    public bool IsAchievableGiven(Dictionary<string, int> conditions)
     {
-        foreach(KeyValuePair<string, int> kvp in conditions)
+        foreach (KeyValuePair<string, int> p in preconditions)
         {
-            if (!conditions.ContainsKey(kvp.Key))
-            {
+            if (!conditions.ContainsKey(p.Key))
                 return false;
-            }
         }
         return true;
     }
