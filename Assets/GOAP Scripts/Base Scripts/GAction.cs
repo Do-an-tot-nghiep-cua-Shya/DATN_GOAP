@@ -17,6 +17,9 @@ public abstract class GAction : MonoBehaviour
     public Dictionary<string, int> preconditions;
     public Dictionary<string, int> effects;
 
+    public GInventory inventory;
+    public WorldStates beliefs;
+
     public WorldStates agentBeliefs;
 
     public bool running = false;
@@ -25,6 +28,7 @@ public abstract class GAction : MonoBehaviour
     {
         preconditions = new Dictionary<string, int>();
         effects = new Dictionary<string, int>();
+
     }
 
     public void Awake()
@@ -42,7 +46,9 @@ public abstract class GAction : MonoBehaviour
             {
                 effects.Add(w.key, w.value);
             }
-
+        
+        inventory = this.GetComponent<GAgent>().inventory;
+        beliefs = this.GetComponent <GAgent>().beliefs;
     }
 
     public bool IsAchievable()
