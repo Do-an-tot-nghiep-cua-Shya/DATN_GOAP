@@ -1,30 +1,51 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class Spawner : MonoBehaviour
 {
+    private static Spawner instance;
     public GameObject patientPrefab;
     public int numOfPatients;
-    // Start is called before the first frame update
-    void Awake()
+    [SerializeField]
+    private int limitOfPatients = 10;
+    public int currentPatients;
+
+    public static Spawner Instance
     {
-        for(int i = 0; i < numOfPatients; i++)
+        get
         {
-            Instantiate(patientPrefab, this.transform.position, Quaternion.identity);
+            if (instance == null)
+                instance = FindObjectOfType<Spawner>();
+            return instance;
         }
-        Invoke("SpawnPatient", Random.Range(12,15));
     }
 
-    // Update is called once per frame
-    void Update()
+    void Awake()
     {
-        
+        if (instance == null)
+        {
+            instance = this;
+        }
+        else if (instance != this)
+        {
+            Destroy(gameObject);
+            return;
+        }
+
+        for (int i = 0; i < numOfPatients; i++)
+        {
+            Instantiate(patientPrefab, this.transform.position, Quaternion.identity);
+            currentPatients++;
+        }
+        Invoke("SpawnPatient", Random.Range(12, 15));
     }
 
     void SpawnPatient()
     {
-        Instantiate(patientPrefab,this.transform.position, Quaternion.identity);
-        Invoke("SpawnPatient", Random.Range(12, 15));
+        if (currentPatients < limitOfPatients)
+        {
+            Instantiate(patientPrefab, this.transform.position, Quaternion.identity);
+            currentPatients++;
+            Invoke("SpawnPatient", Random.Range(12, 15));
+        }
     }
 }

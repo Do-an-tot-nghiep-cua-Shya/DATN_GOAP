@@ -6,6 +6,7 @@ public class Resigter : GAction
 {
     public override bool PostPerform()
     {
+        beliefs.ModifyState("atHospital", 0);
         return true;
     }
 
