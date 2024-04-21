@@ -12,6 +12,7 @@ TagManager:
   - Cubicle
   - Reception
   - Toilet
+  - Puddle
   layers:
   - Default
   - TransparentFX
