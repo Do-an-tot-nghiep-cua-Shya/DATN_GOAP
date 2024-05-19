@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
-public class RobberBehaviour : BTAgent
+public class GuardBehaviour : BTAgent
 {
     public GameObject door;
     public GameObject toilet;
