@@ -8,7 +8,6 @@
     public override bool PostPerform() {
 
         Destroy(this.gameObject, 1.0f);
-        Spawner.Instance.currentPatients--;
         return true;
     }
 }
